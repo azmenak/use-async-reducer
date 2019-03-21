@@ -46,11 +46,31 @@ const reducer = (
 }
 
 interface AsyncReducerBoundActions {
+  /**
+   * To be called at the beginning of a request, sets `loading` to `true`
+   */
   request(): void
+  /**
+   * To be called with the data to be saved into the state
+   * @param payload Result of the async call
+   */
   success(payload: any): void
+  /**
+   * To be called when the async call fails
+   * @param error
+   */
   failure(error: Error): void
 }
 
+/**
+ * Provides a reducer and actions to manage states of async operations
+ * @param initialValue Will set the `data` attribute of the first returned value
+ * @returns An array of two values
+ *  0. the state of the async operation with the shape
+ *  1. object of bound action methods
+ *
+ * @see [https://github.com/azmenak/use-async-reducer/blob/master/README.md](https://github.com/azmenak/use-async-reducer/blob/master/README.md)
+ */
 export default function useAsyncReducer<V extends any>(
   initialValue?: V
 ): [Loadable<V>, AsyncReducerBoundActions] {
