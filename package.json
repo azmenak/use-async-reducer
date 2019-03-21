@@ -1,6 +1,6 @@
 {
   "name": "use-async-reducer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Provides a reducer to simplify handling of async actions",
   "scripts": {},
   "keywords": [
