@@ -51,26 +51,24 @@ interface AsyncReducerBoundActions {
   failure(error: Error): void
 }
 
-function useAsyncReducer<V extends any>(
+export default function useAsyncReducer<V extends any>(
   initialValue?: V
 ): [Loadable<V>, AsyncReducerBoundActions] {
   const [state, dispatch] = useReducer(reducer, {
-    data: initialValue,
+    data: initialValue || null,
     loading: false,
     error: null
   })
 
   const request = useCallback(() => dispatch(actions.request()), [])
   const success = useCallback(
-    () => (payload: V) => dispatch(actions.success(payload)),
+    (payload: V) => dispatch(actions.success(payload)),
     []
   )
   const failure = useCallback(
-    () => (error: Error) => dispatch(actions.failure(error)),
+    (error: Error) => dispatch(actions.failure(error)),
     []
   )
 
   return [state, {request, success, failure}]
 }
-
-export default useAsyncReducer
