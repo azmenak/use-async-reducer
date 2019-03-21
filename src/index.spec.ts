@@ -6,7 +6,7 @@ afterEach(cleanup)
 
 describe('use-async-call', () => {
   it('sets the response value to the results of success actions', () => {
-    const {result} = renderHook(() => useAsyncReducer())
+    const {result} = renderHook(() => useAsyncReducer<boolean | null>(null))
 
     expect(result.current[0]).toEqual({
       data: null,
@@ -34,7 +34,7 @@ describe('use-async-call', () => {
   })
 
   it('sets the response value to the results of error actions', () => {
-    const {result} = renderHook(() => useAsyncReducer())
+    const {result} = renderHook(() => useAsyncReducer<boolean | null>(null))
 
     expect(result.current[0]).toEqual({
       data: null,

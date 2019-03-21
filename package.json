@@ -2,7 +2,13 @@
   "name": "use-async-reducer",
   "version": "1.0.3",
   "description": "Provides a reducer to simplify handling of async actions",
-  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azmenak/use-async-reducer"
+  },
+  "scripts": {
+    "test": "jest"
+  },
   "keywords": [
     "react",
     "hook",
@@ -39,7 +45,12 @@
   "@pika/pack": {
     "pipeline": [
       [
-        "@pika/plugin-ts-standard-pkg"
+        "@pika/plugin-ts-standard-pkg",
+        {
+          "exclude": [
+            "*.spec.*"
+          ]
+        }
       ],
       [
         "@pika/plugin-build-node"
