@@ -4,4 +4,4 @@ node_js:
 cache:
   directories:
     - node_modules
-script: npx test
+script: npm run test
