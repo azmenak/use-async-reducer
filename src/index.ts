@@ -1,23 +1,13 @@
 import {useReducer, useCallback} from 'react'
-import {createAsyncAction, ActionType, getType} from 'typesafe-actions'
+import {ActionType, getType} from 'typesafe-actions'
+
+import * as actions from './actions'
 
 type Loadable<V = any> = {
   loading: boolean
   error: Error | null
   data: V
 }
-
-enum ACTION_TYPES {
-  REQUEST = 'REQUEST',
-  SUCCESS = 'SUCCESS',
-  FAILURE = 'FAILURE'
-}
-
-const actions = createAsyncAction(
-  ACTION_TYPES.REQUEST,
-  ACTION_TYPES.SUCCESS,
-  ACTION_TYPES.FAILURE
-)<undefined, Object, Error>()
 
 const reducer = (
   state: Loadable<any>,
@@ -42,6 +32,11 @@ const reducer = (
         error: action.payload,
         loading: false
       }
+    case getType(actions.complete):
+      return {
+        ...state,
+        loading: false
+      }
   }
 }
 
@@ -60,6 +55,10 @@ interface AsyncReducerBoundActions {
    * @param error
    */
   failure(error: Error): void
+  /**
+   * Can be called when a call fails/complete and the result is being discarded
+   */
+  complete(): void
 }
 
 /**
@@ -89,6 +88,7 @@ export default function useAsyncReducer<V extends any>(
     (error: Error) => dispatch(actions.failure(error)),
     []
   )
+  const complete = useCallback(() => dispatch(actions.complete()), [])
 
-  return [state, {request, success, failure}]
+  return [state, {request, success, failure, complete}]
 }

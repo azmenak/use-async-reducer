@@ -61,4 +61,32 @@ describe('use-async-call', () => {
       error: err
     })
   })
+
+  it('sets the loading state to false after complete callback', () => {
+    const {result} = renderHook(() => useAsyncReducer<boolean | null>(null))
+
+    expect(result.current[0]).toEqual({
+      data: null,
+      loading: false,
+      error: null
+    })
+
+    act(() => {
+      result.current[1].request()
+    })
+    expect(result.current[0]).toEqual({
+      data: null,
+      loading: true,
+      error: null
+    })
+
+    act(() => {
+      result.current[1].complete()
+    })
+    expect(result.current[0]).toEqual({
+      data: null,
+      loading: false,
+      error: null
+    })
+  })
 })
