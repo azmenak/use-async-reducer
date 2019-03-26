@@ -3,14 +3,17 @@ import {ActionType, getType} from 'typesafe-actions'
 
 import * as actions from './actions'
 
-type Loadable<V = any> = {
+export * from './actions'
+export * from './constants'
+
+export type Loadable<V = any> = {
   loading: boolean
   error: Error | null
   data: V
 }
 
-const reducer = (
-  state: Loadable<any>,
+export const reducer = <T extends any>(
+  state: Loadable<T>,
   action: ActionType<typeof actions>
 ): Loadable<any> => {
   switch (action.type) {
@@ -40,7 +43,7 @@ const reducer = (
   }
 }
 
-interface AsyncReducerBoundActions {
+export interface AsyncReducerBoundActions<T = any> {
   /**
    * To be called at the beginning of a request, sets `loading` to `true`
    */
@@ -49,7 +52,7 @@ interface AsyncReducerBoundActions {
    * To be called with the data to be saved into the state
    * @param payload Result of the async call
    */
-  success(payload: any): void
+  success(payload: T): void
   /**
    * To be called when the async call fails
    * @param error
@@ -72,7 +75,7 @@ interface AsyncReducerBoundActions {
  */
 export default function useAsyncReducer<V extends any>(
   initialValue?: V
-): [Loadable<V>, AsyncReducerBoundActions] {
+): [Loadable<V>, AsyncReducerBoundActions<V>] {
   const [state, dispatch] = useReducer(reducer, {
     data: initialValue || null,
     loading: false,
