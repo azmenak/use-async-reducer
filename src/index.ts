@@ -40,8 +40,6 @@ export const reducer = <T extends any>(
         ...state,
         loading: false
       }
-    default:
-      return state
   }
 }
 
