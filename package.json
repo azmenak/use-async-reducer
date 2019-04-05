@@ -24,7 +24,7 @@
   "author": "Adam Zmenak <adam.zmenak@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "typesafe-actions": "^3.2.1"
+    "typesafe-actions": "^3.4.0"
   },
   "devDependencies": {
     "@pika/plugin-build-node": "^0.3.14",
