@@ -40,6 +40,9 @@ export const reducer = <T extends any>(
         ...state,
         loading: false
       }
+    /* istanbul ignore next */
+    default:
+      return state
   }
 }
 
