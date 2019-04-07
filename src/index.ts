@@ -17,6 +17,12 @@ export const reducer = <T extends any>(
   action: ActionType<typeof actions>
 ): Loadable<any> => {
   switch (action.type) {
+    case getType(actions.initialize):
+      return {
+        data: null,
+        loading: true,
+        error: null
+      }
     case getType(actions.request):
       return {
         ...state,
@@ -48,7 +54,18 @@ export const reducer = <T extends any>(
 
 export interface AsyncReducerBoundActions<T = any> {
   /**
-   * To be called at the beginning of a request, sets `loading` to `true`
+   * To be called at the beginning of a request, sets state to:
+   ```
+   {
+     data: null
+     loading: true,
+     error: null
+   }
+   ```
+   */
+  initialize(): void
+  /**
+   * To be called at the beginning of async updates, sets `loading` to `true`
    */
   request(): void
   /**
@@ -85,6 +102,7 @@ export default function useAsyncReducer<V extends any>(
     error: null
   })
 
+  const initialize = useCallback(() => dispatch(actions.initialize()), [])
   const request = useCallback(() => dispatch(actions.request()), [])
   const success = useCallback(
     (payload: V) => dispatch(actions.success(payload)),
@@ -96,5 +114,5 @@ export default function useAsyncReducer<V extends any>(
   )
   const complete = useCallback(() => dispatch(actions.complete()), [])
 
-  return [state, {request, success, failure, complete}]
+  return [state, {initialize, request, success, failure, complete}]
 }

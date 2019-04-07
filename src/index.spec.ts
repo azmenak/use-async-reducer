@@ -89,4 +89,34 @@ describe('use-async-call', () => {
       error: null
     })
   })
+
+  it('resets the state on initialize', () => {
+    const {result} = renderHook(() => useAsyncReducer<boolean | null>(null))
+
+    expect(result.current[0]).toEqual({
+      data: null,
+      loading: false,
+      error: null
+    })
+
+    act(() => {
+      result.current[1].success(true)
+    })
+
+    expect(result.current[0]).toEqual({
+      data: true,
+      loading: false,
+      error: null
+    })
+
+    act(() => {
+      result.current[1].initialize()
+    })
+
+    expect(result.current[0]).toEqual({
+      data: null,
+      loading: true,
+      error: null
+    })
+  })
 })
