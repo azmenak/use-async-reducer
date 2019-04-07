@@ -1,6 +1,6 @@
 {
   "name": "use-async-reducer",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "Provides a reducer to simplify handling of async actions",
   "repository": {
     "type": "git",
